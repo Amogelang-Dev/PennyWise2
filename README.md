@@ -410,7 +410,7 @@ Potential improvements include:
 - Add a dedicated privacy policy and data-retention explanation.
 
 ---
-##Demonstration Video
+## Demonstration Video
 
 Here is the link to the official demonstration video: https://youtu.be/Q26cPzqtEZ8?si=llGYXxEvvPXlTBs_
 
