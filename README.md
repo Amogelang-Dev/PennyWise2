@@ -22,7 +22,7 @@
 
 PennyWise is an Android personal-finance application designed to help users understand and improve their spending habits.
 
-Many people know that they should budget, but traditional finance applications can feel complicated, passive, or difficult to use consistently. PennyWise addresses this problem by combining practical financial tools with a simple gamification system.
+Many people know that they should budget, but traditional finance applications can feel complicated, passive, or difficult to use consistently. PennyWise addresses this problem by combining practical [...]
 
 The app allows users to:
 
@@ -128,7 +128,7 @@ Receipts can be attached to expense records and accessed later from the reports 
 
 ### Simplicity
 
-Financial applications should not require users to understand complex accounting concepts. PennyWise uses straightforward labels, currency formatting, navigation menus, and visual feedback to reduce cognitive effort.
+Financial applications should not require users to understand complex accounting concepts. PennyWise uses straightforward labels, currency formatting, navigation menus, and visual feedback to reduce c[...]
 
 ### Local-First Expense Storage
 
@@ -197,7 +197,7 @@ The app works with sensitive financial information. Important privacy considerat
 - Sensitive data should be encrypted where appropriate.
 - Passwords must never be stored directly in Firestore or plain-text local preferences.
 
-The current implementation should be improved by replacing direct password storage in `FirstActivity.kt` with Firebase Authentication. Passwords should be handled by Firebase Authentication and never written to the Firestore user document.
+The current implementation should be improved by replacing direct password storage in `FirstActivity.kt` with Firebase Authentication. Passwords should be handled by Firebase Authentication and never [...]
 
 ## Technical Architecture
 
@@ -253,6 +253,16 @@ Reporting
 - **Charts:** MPAndroidChart
 - **Networking:** OkHttp
 - **Testing:** JUnit, AndroidX Test, and Espresso
+
+## External APIs Used
+
+The app currently integrates with three external API services:
+
+- **Firebase Firestore API** — used for user registration, profile data, and syncing XP/progress data to the cloud.
+- **Advice Slip API** — the public daily advice service used to show motivational financial tips on the dashboard (`https://api.adviceslip.com/advice`).
+- **Google Maps / OpenStreetMap location services** — used to open nearby ATM locations through the device map app or an OpenStreetMap browser fallback.
+
+These three services are the main external integrations used by PennyWise for cloud storage, daily guidance, and ATM discovery.
 
 ## Installation and Setup
 
