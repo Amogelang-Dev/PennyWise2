@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstActivity">
+
+    <!-- scrollview for the main content -->
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_gray"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="24dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <!-- pennywise branding -->
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/img_app_logo"
+                android:src="@drawable/pennywise3"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="32dp"
+                android:contentDescription="@string/desc_pennywise_logo" />
+
+            <!-- The main registration form inside a nice elevated card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/surface_light">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_create_account"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="24dp"/>
+
+                    <!-- User Details Input Fields -->
+                    <EditText
+                        android:id="@+id/et_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="@string/hint_username"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="text"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="@string/hint_email"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="@string/hint_password"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/et_confirm_password"
+                        android:hint="@string/hint_confirm_password"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="24dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <!-- register button -->
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:id="@+id/btn_register"
+                        android:text="@string/btn_register"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/primary_blue"
+                        app:cornerRadius="8dp"
+                        android:onClick="home"
+                        />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- login hyperlink-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_text"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginRight="5dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_text2"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"
+                    android:onClick="login_page"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- This overlay shows up while we're "registering" the user  -->
+    <RelativeLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="60dp"
+            android:text="@string/loading_registering"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</FrameLayout>

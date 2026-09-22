@@ -1,0 +1,230 @@
+<!-- This file stores all the text used throughout the app in one place -->
+<resources>
+    <!-- The name of the application -->
+    <string name="app_name">PennyWise</string>
+
+    <!-- Text shown on the very first screen when the app opens -->
+    <string name="welcome_text">Ready to take charge of your money?</string>
+    <string name="welcome_text2">Let PennyWise help you track your spending, grow your savings, and make every penny count!</string>
+    <string name="btn_started">Get started</string>
+
+    <!-- Text used on the registration and login screens -->
+    <string name="btn_register">Register</string>
+    <string name="login_text">Already have an account?</string>
+    <string name="login_text2">Login</string>
+    <string name="btn_login">Login</string>
+    <string name="title_create_account">Create Account</string>
+    <string name="title_welcome_back">Welcome Back</string>
+    <string name="register_text">Don\'t have an account?</string>
+    <string name="register_text2">Register</string>
+
+    <!-- Progress page string values -->
+    <string name="title_progress">Progress</string>
+    <string name="your_progress">Financial Journey</string>
+    <string name="label_tier">Current Status</string>
+    <string name="label_streak">Logging Streak</string>
+    <string name="label_achievements">Financial Milestones</string>
+    <string name="milestone_receipt_title">Receipt Ninja</string>
+    <string name="milestone_receipt_desc">Logged 5 photo receipts</string>
+    <string name="milestone_budget_title">Budget Warrior</string>
+    <string name="milestone_budget_desc">Set a monthly spending limit</string>
+    <string name="milestone_tracker_title">Consistent Tracker</string>
+    <string name="milestone_tracker_desc">Logged 10+ transactions</string>
+
+    <!-- Dashboard/Home strings -->
+    <string name="title_home">Pennywise</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="money_overview">Your Money Overview</string>
+    <string name="in_my_pocket">In My Pocket</string>
+    <string name="income_label">Income</string>
+    <string name="expenses_label">Expenses</string>
+    <string name="min_budget_label">Min Budget</string>
+    <string name="max_budget_label">Max Budget</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="add_button">+</string>
+
+    <!-- Budget Settings strings -->
+    <string name="title_budget">Budget Settings</string>
+    <string name="label_monthly_income">Monthly Income / Starting Balance</string>
+    <string name="hint_income">Enter Income (R)</string>
+    <string name="label_min_budget">Minimum Monthly Budget</string>
+    <string name="hint_min_goal">Minimum Goal (R)</string>
+    <string name="label_max_budget">Maximum Monthly Budget</string>
+    <string name="hint_spending_limit">Spending Limit (R)</string>
+    <string name="btn_save_budget">Save Budget Goals</string>
+
+    <!-- Report strings -->
+    <string name="title_report">Report</string>
+    <string name="label_expense_reports">Expense Reports</string>
+    <string name="btn_download_statement">Download Statement</string>
+    <string name="label_category_breakdown">Category Breakdown</string>
+    <string name="label_from">From: </string>
+    <string name="label_to">To: </string>
+    <string name="hint_date_format">DD/MM/YYYY</string>
+    <string name="btn_filter_period">Filter Period</string>
+    <string name="label_individual_transactions">Individual Transactions</string>
+    <string name="btn_view_receipt">View Receipt</string>
+    <string name="btn_download_receipt">Download Receipt</string>
+
+    <!-- Add Expense strings -->
+    <string name="title_add_expense">Expenses</string>
+    <string name="label_amount">Amount (R)</string>
+    <string name="label_description">Description</string>
+    <string name="label_category">Category</string>
+    <string name="label_date">Date</string>
+    <string name="hint_select_date">Select Date</string>
+    <string name="label_start_time">Start Time</string>
+    <string name="label_end_time">End Time</string>
+    <string name="hint_time">00:00</string>
+    <string name="label_upload_receipt">Upload Receipt</string>
+    <string name="btn_choose_image">Choose Image</string>
+    <string name="btn_save_expense">Save Expense</string>
+    <string name="hint_custom_category">Enter Custom Category</string>
+
+    <!-- Input Hints -->
+    <string name="hint_username">Username</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="label_financial_novice">Financial Novice</string>
+    <string name="label_saver">Saver</string>
+    <string name="label_strategist">Strategist</string>
+    <string name="label_wealth_builder">Wealth Builder</string>
+    <string name="label_generational_wealth_builder">Generational Wealth Builder</string>
+    <string name="xp_status_placeholder">%1$d XP until next tier</string>
+    <string name="xp_max_tier">Max Tier Reached!</string>
+    <string name="desc_streak_icon">Streak Icon</string>
+    <string name="days_count_placeholder">%1$d Days</string>
+    <string name="desc_logout">Logout</string>
+
+    <!-- Settings Activity strings -->
+    <string name="title_settings">Settings</string>
+    <string name="label_preferences">Preferences</string>
+    <string name="label_currency">Currency</string>
+    <string name="label_budget_start_date">Budget Start Date</string>
+    <string name="label_appearance_alerts">Appearance &amp; Alerts</string>
+    <string name="label_dark_mode">Dark Mode</string>
+    <string name="label_notifications">Notifications</string>
+    <string name="label_account_support">Account &amp; Support</string>
+    <string name="label_edit_profile">Edit Profile</string>
+    <string name="label_about_pennywise">About Pennywise</string>
+    <string name="label_data_management">Data Management</string>
+    <string name="btn_clear_transactions">Clear All Transactions</string>
+    <string name="dialog_clear_title">Clear All Data</string>
+    <string name="dialog_clear_message">Are you sure you want to delete all transaction history? This cannot be undone.</string>
+    <string name="btn_delete_everything">Delete Everything</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- Profile Activity strings -->
+    <string name="label_back">Back</string>
+    <string name="title_profile">Profile</string>
+    <string name="desc_edit_photo">Edit Photo</string>
+    <string name="hint_email_address">Email Address</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="btn_save_changes">Save Changes</string>
+    <string name="label_xp_level">Level %1$d</string>
+    <string name="label_current_xp">%1$d / %2$d XP</string>
+    <string name="label_achievements_title">Achievements</string>
+    <string name="desc_achievement_icon">Achievement Icon</string>
+
+    <!-- Navigation Drawer -->
+    <string name="desc_menu">Menu</string>
+    <string name="desc_back">Back</string>
+    <string name="default_currency_zero">R 0.00</string>
+    <string name="placeholder_user_name">User Name</string>
+    <string name="desc_pennywise_logo">Pennywise Logo</string>
+
+    <!-- Manual Activity strings -->
+    <string name="title_manual">App Manual</string>
+    <string name="manual_dashboard_title">1. Dashboard Overview</string>
+    <string name="manual_dashboard_desc">The dashboard is your financial command center. See your total balance ("In My Pocket"), income, and expenses at a glance. The progress bar changes color based on your spending: Green (Safe), Yellow (Caution), and Red (Over Limit).</string>
+    <string name="manual_expenses_title">2. Logging Spending</string>
+    <string name="manual_expenses_desc">Tap the \'+ icon\' on the bottom bar to add an expense. Enter the amount, description, and category. You can also upload a photo of your receipt to keep digital records of your purchases.</string>
+    <string name="manual_budgeting_title">3. Setting Goals</string>
+    <string name="manual_budgeting_desc">Use the \'Budget tab\' (target icon) to define your monthly income, minimum savings goal, and maximum spending limit. Pennywise uses these to track your financial health automatically.</string>
+    <string name="manual_reports_title">4. Reports &amp; Statements</string>
+    <string name="manual_reports_desc">Access \'Reports\' from the side menu to view category breakdowns and transaction history. Filter by date range to analyze specific periods, and use the \'Download Statement\' button to save a text report of your spending.</string>
+    <string name="manual_gamification_title">5. Achievements &amp; XP</string>
+    <string name="manual_gamification_desc">Earn XP by staying consistent! Log expenses (+10 XP) and set budgets (+50 XP) to level up from Financial Novice to Wealth Builder. Check the \'Progress\' tab to see your journey map and unlock unique badges.</string>
+    <string name="manual_profile_title">6. Profile &amp; Customization</string>
+    <string name="manual_profile_desc">Personalize your experience in the \'Profile\' section. Upload a profile picture, update your username, and track your badges. Visit \'Settings\' to manage notifications or clear your transaction history if you want a fresh start.</string>
+    <string name="manual_offline_title">7. Offline Access &amp; Privacy</string>
+    <string name="manual_offline_desc">PennyWise stores all your financial data locally on your device. This means your sensitive information stays private and you can log expenses even without an internet connection.</string>
+    <string name="manual_tips_title">8. Tips for Success</string>
+    <string name="manual_tips_desc">For the most accurate tracking, try to log expenses as soon as they happen. Don\'t forget to check your \'Report\' weekly to spot trends and adjust your \'Budget Goals\' if you find yourself consistently over-spending in certain categories.</string>
+
+    <!-- About Activity strings -->
+    <string name="title_about">About App</string>
+    <string name="about_pennywise_desc">Pennywise is your ultimate personal finance companion, designed to help you track spending, set budgets, and achieve your financial goals with ease.</string>
+    <string name="label_version_number">Version 3.0.0</string>
+    <string name="copyright_team">© 2026 Pennywise Team</string>
+    <string name="company_name">SyreTech Solutions</string>
+    <string name="desc_app_logo">App Logo</string>
+
+    <!-- UI feedback and Toast messages -->
+    <string name="toast_data_cleared">All transactions cleared</string>
+    <string name="toast_profile_updated">Profile updated successfully!</string>
+    <string name="toast_select_dates">Please select both dates</string>
+    <string name="toast_error_open_image">Couldn\'t open the image. Is it still on your phone?</string>
+
+    <!-- Error Messages -->
+    <string name="error_empty_username">Username cannot be empty</string>
+    <string name="error_invalid_username">Username must contain only letters</string>
+    <string name="error_invalid_password">Password must include letters, numbers, and special characters</string>
+    <string name="error_invalid_email">Please enter a valid email address</string>
+
+    <!-- Dynamic Content and Labels -->
+    <string name="msg_welcome_user">Good to see you, %1$s</string>
+    <string name="label_receipt">Receipt</string>
+    <string name="msg_no_transactions">No spending logs found yet. Start by adding one!</string>
+    <string name="label_amount_negative">- %1$s</string>
+
+    <!-- Transaction Detail Options -->
+    <string name="option_view_summary">View Summary</string>
+    <string name="option_open_image">Open Image Receipt</string>
+    <string name="option_save_file">Save to File</string>
+    <string name="option_view_details">View Details</string>
+    <string name="option_download_receipt">Download Receipt</string>
+
+    <!-- Receipt/Statement Templates -->
+    <string name="header_transaction_receipt">TRANSACTION RECEIPT</string>
+    <string name="label_category_colon">Category: %1$s</string>
+    <string name="label_amount_colon">Amount: %1$s</string>
+    <string name="label_description_colon">Description: %1$s</string>
+    <string name="label_date_colon">Date: %1$s</string>
+    <string name="footer_thank_you">Thank you for using Pennywise!</string>
+    <string name="header_statement">PENNYWISE FINANCIAL STATEMENT</string>
+    <string name="label_generated_on">Generated on: %1$s</string>
+    <string name="label_period">Period: %1$s to %2$s</string>
+    <string name="label_total_expenses">TOTAL EXPENSES: %1$s</string>
+
+    <!-- Misc strings -->
+    <string name="placeholder_zero_percent">0%</string>
+    <string name="desc_receipt_preview">Receipt preview</string>
+    <string name="label_custom_category_display">Custom Category</string>
+
+    <!-- Budget Status messages -->
+    <string name="msg_budget_critical">CRITICAL: You have exceeded your Maximum Budget of %1$s!</string>
+    <string name="msg_budget_warning">CAUTION: You have passed your Minimum Goal of %1$s.</string>
+    <string name="msg_budget_healthy">Great job! You are currently within your budget goals.</string>
+
+    <!-- Loading Messages -->
+    <string name="budget_progress_title">Monthly Budget Progression</string>
+    <string name="label_spending_limit">Spending Limit</string>
+    <string name="label_target_goal">Target Goal</string>
+    <string name="loading_registering">Creating Account&#8230;</string>
+    <string name="loading_refreshing">Refreshing Data&#8230;</string>
+    <string name="loading_saving_expense">Saving Expense&#8230;</string>
+    <string name="loading_generating_report">Generating Report&#8230;</string>
+    <string name="loading_updating_profile">Updating Profile&#8230;</string>
+    <string name="loading_saving_budget">Saving Budget&#8230;</string>
+    <string name="loading_logging_in">Logging in&#8230;</string>
+    <string name="loading_clearing_data">Clearing Data&#8230;</string>
+
+    <!-- Advice & ATM Strings -->
+    <string name="label_financial_tip">💡 Financial Tip of the Day</string>
+    <string name="msg_loading_tip">Loading your tip...</string>
+    <string name="advice_load_error">Could not load tip. Check connection.</string>
+    <string name="advice_parse_error">Error reading financial tip.</string>
+    <string name="btn_find_atm">Find Nearest ATM</string>
+</resources>

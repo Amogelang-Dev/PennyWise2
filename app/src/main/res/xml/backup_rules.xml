@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file sets the rules for how the app's data is backed up to the cloud so it can be restored later -->
+<full-backup-content>
+    <!-- By default, this section can be used to include or exclude specific files from being backed up -->
+</full-backup-content>

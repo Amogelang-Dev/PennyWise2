@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines a blue border with rounded corners that can be used around different boxes in the app -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- The inside of the box is clear -->
+            <solid android:color="@android:color/transparent"/>
+            <!-- The border is 2 units wide and blue -->
+            <stroke
+                android:width="2dp"
+                android:color="@color/primary_blue" />
+            <!-- The corners are slightly rounded -->
+            <corners
+                android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "577260761343",
+    "project_id": "syretech-ecosystem",
+    "storage_bucket": "syretech-ecosystem.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577260761343:android:57581dccc019fb7ea6dcca",
+        "android_client_info": {
+          "package_name": "com.example.navigation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhRT38DzpPWBEfkdKnMqWblDk6qYwhSxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577260761343:android:6b2c7cd8e5116b29a6dcca",
+        "android_client_info": {
+          "package_name": "com.example.nuetralautomatedengine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhRT38DzpPWBEfkdKnMqWblDk6qYwhSxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577260761343:android:bed336f060c0af93a6dcca",
+        "android_client_info": {
+          "package_name": "com.example.syreengine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhRT38DzpPWBEfkdKnMqWblDk6qYwhSxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

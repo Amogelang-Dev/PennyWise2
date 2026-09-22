@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <!-- Scrollable container for flexibility -->
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_gray"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="24dp">
+
+            <!-- App Logo - slightly more margin here for a nice breathing space -->
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/img_app_logo"
+                android:src="@drawable/pennywise3"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="32dp"
+                android:contentDescription="@string/desc_pennywise_logo" />
+
+            <!-- Login form card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/surface_light">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_welcome_back"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="24dp"/>
+
+                    <!-- Credentials Input -->
+                    <EditText
+                        android:id="@+id/et_login_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="@string/hint_username"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="text"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <EditText
+                        android:id="@+id/et_login_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="@string/hint_email"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <EditText
+                        android:id="@+id/et_login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="@string/hint_password"
+                        android:textColorHint="@color/text_secondary"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_primary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="24dp"
+                        android:background="@drawable/white_boarder"
+                        />
+
+                    <!-- log in -->
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="@string/btn_login"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/primary_blue"
+                        app:cornerRadius="8dp"
+                        android:onClick="home"
+                        />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Register -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_text"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginRight="5dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_text2"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"
+                    android:onClick="register_page"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Logging in. -->
+    <RelativeLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="60dp"
+            android:text="@string/loading_logging_in"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</FrameLayout>

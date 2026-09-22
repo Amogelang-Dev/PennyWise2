@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BudgetActivity">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background_gray">
+
+        <!-- Top bar with a sidebar menu toggle and page title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="@color/primary_blue"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:id="@+id/btn_menu"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="@color/white"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/desc_menu"
+                android:padding="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/title_budget"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Budget Parameters: A unified card for data entry -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@drawable/rounded_surface"
+                    android:layout_marginBottom="32dp">
+
+                    <!-- monthly income-->
+                    <TextView
+                        android:text="@string/label_monthly_income"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"/>
+                    <EditText
+                        android:id="@+id/etPocket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_income"
+                        android:inputType="numberDecimal"
+                        android:background="@color/surface_light"
+                        android:padding="12dp"
+                        android:autofillHints="none" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_light"
+                        android:layout_marginVertical="20dp"/>
+
+                    <!-- minimum budget goal -->
+                    <TextView
+                        android:text="@string/label_min_budget"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"/>
+                    <EditText
+                        android:id="@+id/etMinBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_min_goal"
+                        android:inputType="numberDecimal"
+                        android:background="@color/surface_light"
+                        android:padding="12dp"
+                        android:autofillHints="none" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_light"
+                        android:layout_marginVertical="20dp"/>
+
+                    <!-- maximum budget goal -->
+                    <TextView
+                        android:text="@string/label_max_budget"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"/>
+                    <EditText
+                        android:id="@+id/etMaxBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_spending_limit"
+                        android:inputType="numberDecimal"
+                        android:background="@color/surface_light"
+                        android:padding="12dp"
+                        android:autofillHints="none" />
+                </LinearLayout>
+
+                <!-- locking in the budget -->
+                <Button
+                    android:id="@+id/btnSaveBudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="@string/btn_save_budget"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secondary_green"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:cornerRadius="4dp"
+                    android:textStyle="bold"
+                    android:elevation="4dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- bottom navigation -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_blue"
+            app:menu="@menu/bottom_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemTextColor="@color/white"
+            app:itemIconTint="@color/white"/>
+
+    </LinearLayout>
+
+    <!-- Sidebar menu for secondary navigation -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

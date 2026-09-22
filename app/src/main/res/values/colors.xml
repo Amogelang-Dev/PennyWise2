@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines the specific colors that are used across different parts of the app -->
+<resources>
+    <color name="primary_blue">#0D47A1</color>
+    <color name="primary_blue_dark">#002171</color>
+    <color name="primary_blue_light">#5472d3</color>
+    <color name="secondary_green">#00C853</color>
+    <color name="success_green">#00E676</color>
+    <color name="warning_yellow">#FFD600</color>
+    <color name="error_red">#FF5252</color>
+    <color name="background_gray">#F8F9FA</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="gray_light">#E0E0E0</color>
+    <color name="gray_medium">#9E9E9E</color>
+    <color name="surface_light">#FFFFFF</color>
+    <color name="card_background">#0D47A1</color>
+    <color name="transaction_card_bg">#FFFFFF</color>
+</resources>

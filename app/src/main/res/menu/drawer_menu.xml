@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <!-- The button to profile page -->
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="Profile" />
+        <!-- The button to report page -->
+        <item
+            android:id="@+id/nav_reports"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="Reports" />
+        <!-- The button to settings page -->
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Settings" />
+        <!-- The button to about page -->
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="About App" />
+        <!-- The button to manual page -->
+        <item
+            android:id="@+id/nav_manual"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="App Manual" />
+    </group>
+    <!-- The button to account logout page -->
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@android:drawable/ic_lock_power_off"
+                android:title="Logout" />
+        </menu>
+    </item>
+</menu>

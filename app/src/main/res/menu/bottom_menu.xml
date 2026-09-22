@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file defines the buttons that appear in the navigation bar at the bottom of the screen -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- The button to go back to the home or main screen -->
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home"/>
+
+    <!-- The button to open the budget planning section -->
+    <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/baseline_account_balance_wallet_24"
+        android:title="Budget"/>
+
+    <!-- The button to add a new expense -->
+    <item
+        android:id="@+id/nav_add_expense"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/title_add_expense"/>
+
+    <!-- The button to see the user's progress and achievements -->
+    <item
+        android:id="@+id/nav_progress"
+        android:title="@string/title_progress"
+        android:icon="@drawable/ic_trending_up" />
+
+
+</menu>
