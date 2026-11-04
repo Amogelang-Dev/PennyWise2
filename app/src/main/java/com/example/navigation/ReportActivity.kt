@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
 import org.json.JSONArray
 import java.io.File
 import java.io.FileOutputStream
@@ -31,8 +32,9 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
 
-class ReportActivity : AppCompatActivity() {
+class ReportActivity : BaseActivity() {
 
+    private val TAG = "ReportActivity"
     private lateinit var etFromDate: EditText
     private lateinit var etToDate: EditText
     private lateinit var btnFilter: Button
@@ -49,6 +51,7 @@ class ReportActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate: Initializing Reports")
         enableEdgeToEdge()
         setContentView(R.layout.activity_report)
 
@@ -124,7 +127,7 @@ class ReportActivity : AppCompatActivity() {
 
         //bottom navigation.
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
+        bottomNav.selectedItemId = -1 // Reports is not in bottom nav, clear selection
         
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
@@ -181,6 +184,7 @@ class ReportActivity : AppCompatActivity() {
     // loading data from the database.
     private fun loadData(startDate: String?, endDate: String?) {
         loadingOverlay.visibility = View.VISIBLE
+        Log.d(TAG, "Loading report data: period=$startDate to $endDate")
         
         android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
             val db = DatabaseHelper(this)
@@ -191,6 +195,7 @@ class ReportActivity : AppCompatActivity() {
             }
 
             val categoryTotals = mutableMapOf<String, Float>()
+            val automatedTotals = mutableMapOf<String, Float>() // Track automated vs manual
             var totalAmount = 0f
             
             breakdownContainer.removeAllViews()
@@ -206,6 +211,10 @@ class ReportActivity : AppCompatActivity() {
 
                     // adding up totals for the pie chart.
                     categoryTotals[category] = categoryTotals.getOrDefault(category, 0f) + amount
+                    
+                    val sourceKey = if (category.startsWith("Automated")) "Automated" else "Manual"
+                    automatedTotals[sourceKey] = automatedTotals.getOrDefault(sourceKey, 0f) + amount
+                    
                     totalAmount += amount
 
                     // adding individual transaction row to the list.
@@ -216,7 +225,7 @@ class ReportActivity : AppCompatActivity() {
             cursor.close()
 
             updateBarChart(categoryTotals, totalAmount)
-            updateBreakdownList(categoryTotals, totalAmount)
+            updateBreakdownList(categoryTotals, automatedTotals, totalAmount)
             updateBudgetStatus(totalAmount)
             
             loadingOverlay.visibility = View.GONE
@@ -273,6 +282,26 @@ class ReportActivity : AppCompatActivity() {
             descText.setPadding(0, 8, 0, 8)
             descText.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
             row.addView(descText)
+        }
+
+        // Automated Badge
+        if (category.startsWith("Automated")) {
+            val badge = TextView(this)
+            badge.text = "🤖 AUTOMATED"
+            badge.textSize = 10f
+            badge.setTextColor(Color.WHITE)
+            badge.setPadding(16, 4, 16, 4)
+            val badgeShape = android.graphics.drawable.GradientDrawable()
+            badgeShape.setColor(ContextCompat.getColor(this, R.color.primary_blue))
+            badgeShape.cornerRadius = 20f
+            badge.background = badgeShape
+            val bParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            bParams.setMargins(0, 0, 0, 8)
+            badge.layoutParams = bParams
+            row.addView(badge, 1) // Insert after header
         }
 
         // Bottom row: Date and Receipt button.
@@ -421,13 +450,65 @@ class ReportActivity : AppCompatActivity() {
         barChart.invalidate()
     }
 
-    private fun updateBreakdownList(categoryTotals: Map<String, Float>, totalAmount: Float) {
+    private fun updateBreakdownList(categoryTotals: Map<String, Float>, automatedTotals: Map<String, Float>, totalAmount: Float) {
         val colors = ArrayList<Int>()
         for (c in ColorTemplate.JOYFUL_COLORS) colors.add(c)
         for (c in ColorTemplate.COLORFUL_COLORS) colors.add(c)
-        for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
-        for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
-        for (c in ColorTemplate.MATERIAL_COLORS) colors.add(c)
+        
+        // Add Source Summary (Automated vs Manual)
+        if (automatedTotals.isNotEmpty()) {
+            val summaryTitle = TextView(this)
+            summaryTitle.text = "Source Summary"
+            summaryTitle.textSize = 14f
+            summaryTitle.setPadding(0, 20, 0, 10)
+            summaryTitle.setTextColor(Color.GRAY)
+            summaryTitle.setTypeface(null, android.graphics.Typeface.BOLD)
+            breakdownContainer.addView(summaryTitle)
+
+            for ((source, amount) in automatedTotals) {
+                val row = LinearLayout(this)
+                row.orientation = LinearLayout.HORIZONTAL
+                row.gravity = android.view.Gravity.CENTER_VERTICAL
+                row.setPadding(20, 10, 20, 10)
+                row.background = android.graphics.drawable.GradientDrawable().apply {
+                    cornerRadius = 10f
+                    setColor(Color.parseColor("#F0F0F0"))
+                }
+
+                val icon = TextView(this)
+                icon.text = if (source == "Automated") "🤖" else "📝"
+                icon.setPadding(0, 0, 20, 0)
+                
+                val text = TextView(this)
+                val percentage = if (totalAmount > 0) (amount / totalAmount) * 100 else 0f
+                text.text = "$source: ${formatCurrency(amount)} (${String.format("%.1f", percentage)}%)"
+                text.setTextColor(Color.BLACK)
+                
+                row.addView(icon)
+                row.addView(text)
+                
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                params.setMargins(0, 5, 0, 5)
+                row.layoutParams = params
+                breakdownContainer.addView(row)
+            }
+            
+            val divider = View(this)
+            divider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2).apply { setMargins(0, 20, 0, 20) }
+            divider.setBackgroundColor(Color.LTGRAY)
+            breakdownContainer.addView(divider)
+        }
+
+        val catTitle = TextView(this)
+        catTitle.text = "Category Breakdown"
+        catTitle.textSize = 14f
+        catTitle.setPadding(0, 10, 0, 10)
+        catTitle.setTextColor(Color.GRAY)
+        catTitle.setTypeface(null, android.graphics.Typeface.BOLD)
+        breakdownContainer.addView(catTitle)
 
         var colorIndex = 0
         for ((category, amount) in categoryTotals) {

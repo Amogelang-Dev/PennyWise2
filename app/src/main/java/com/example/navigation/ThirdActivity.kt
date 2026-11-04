@@ -23,6 +23,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.SimpleDateFormat
 import java.util.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -32,7 +33,7 @@ import okhttp3.Response
 import org.json.JSONObject
 
 
-class ThirdActivity : AppCompatActivity() {
+class ThirdActivity : BaseActivity() {
 
     // Logging tag for debugging and lifecycle tracking
     private val TAG = "ThirdActivity"
@@ -59,6 +60,10 @@ class ThirdActivity : AppCompatActivity() {
         // This makes the app content flow nicely under the status bar.
         enableEdgeToEdge()
         setContentView(R.layout.activity_third)
+
+        // Ensure status bar is blue to match our new theme
+        window.statusBarColor = ContextCompat.getColor(this, R.color.primary_blue)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.primary_blue)
 
         // Setting up the side menu.
         sideMenuDrawer = findViewById(R.id.drawer_layout)
@@ -224,16 +229,16 @@ class ThirdActivity : AppCompatActivity() {
                     usagePercentageText.setTextColor(ContextCompat.getColor(this, R.color.warning_yellow))
                 }
                 else -> {
-                    // Below Min Goal - GREEN
-                    monthlyUsageProgressBar.progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress_bar_green)
-                    usagePercentageText.setTextColor(ContextCompat.getColor(this, R.color.success_green))
+                    // Below Min Goal - Use white for consistency with blue card theme
+                    monthlyUsageProgressBar.progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress_bar_white)
+                    usagePercentageText.setTextColor(ContextCompat.getColor(this, R.color.white))
                 }
             }
         } else {
             monthlyUsageProgressBar.progress = 0
             usagePercentageText.text = "0%"
-            monthlyUsageProgressBar.progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress_bar_green)
-            usagePercentageText.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+            monthlyUsageProgressBar.progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress_bar_white)
+            usagePercentageText.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
     }
 
@@ -267,9 +272,8 @@ class ThirdActivity : AppCompatActivity() {
                 orientation = LinearLayout.HORIZONTAL
                 setPadding(32, 32, 32, 32)
                 background = android.graphics.drawable.GradientDrawable().apply {
-                        setColor(ContextCompat.getColor(this@ThirdActivity, R.color.transaction_card_bg))
+                        setColor(Color.TRANSPARENT)
                         cornerRadius = 16f
-                        setStroke(1, ContextCompat.getColor(this@ThirdActivity, R.color.gray_light))
                     }
                 
                 val params = LinearLayout.LayoutParams(
@@ -328,8 +332,16 @@ class ThirdActivity : AppCompatActivity() {
             transactionRow.addView(amountLabel)
             transactionRow.addView(receiptButton)
 
-            // Add this row to the top of our list as it is the most recent.
-            transactionListContainer.addView(transactionRow, 0) 
+            transactionListContainer.addView(transactionRow, 0)
+            
+            // Add a separator view
+            val separator = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1).apply {
+                    setMargins(32, 0, 32, 0)
+                }
+                setBackgroundColor(ContextCompat.getColor(this@ThirdActivity, R.color.gray_light))
+            }
+            transactionListContainer.addView(separator, 0)
         } while (transactionCursor.moveToNext())
         
         transactionCursor.close()
@@ -405,7 +417,20 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     private fun fetchDailyAdvice() {
-        Log.d(TAG, "Fetching daily financial tip from API")
+        val advicePrefs = getSharedPreferences("DailyAdvicePrefs", MODE_PRIVATE)
+        val lastFetchedDate = advicePrefs.getString("last_fetched_date", "")
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val currentDate = sdf.format(Date())
+
+        if (lastFetchedDate == currentDate) {
+            val savedAdvice = advicePrefs.getString("daily_advice", null)
+            if (savedAdvice != null) {
+                tvDailyAdvice.text = savedAdvice
+                return
+            }
+        }
+
+        Log.d(TAG, "Fetching new daily financial tip from API")
         val client = OkHttpClient()
         val request = Request.Builder()
             .url("https://api.adviceslip.com/advice")
@@ -415,7 +440,8 @@ class ThirdActivity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e(TAG, "Advice API call failed", e)
                 runOnUiThread {
-                    tvDailyAdvice.text = getString(R.string.advice_load_error)
+                    val fallbackAdvice = advicePrefs.getString("daily_advice", getString(R.string.advice_load_error))
+                    tvDailyAdvice.text = fallbackAdvice
                 }
             }
 
@@ -425,9 +451,14 @@ class ThirdActivity : AppCompatActivity() {
                 if (jsonString != null) {
                     try {
                         val json = JSONObject(jsonString)
-                        val advice = json.getJSONObject("slip").getString("advice")
+                        val advice = "\"${json.getJSONObject("slip").getString("advice")}\""
                         runOnUiThread {
-                            tvDailyAdvice.text = "\"$advice\""
+                            tvDailyAdvice.text = advice
+                            advicePrefs.edit().apply {
+                                putString("last_fetched_date", currentDate)
+                                putString("daily_advice", advice)
+                                apply()
+                            }
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error parsing advice JSON", e)

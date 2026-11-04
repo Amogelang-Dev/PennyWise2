@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
         <!-- Header bar containing the title and actions for navigation and session management. -->
         <LinearLayout
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/btn_menu"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@android:drawable/ic_menu_sort_by_size"
                 app:tint="@color/white"
                 android:layout_marginEnd="16dp"
@@ -77,20 +77,26 @@
                     android:contentDescription="@string/desc_app_logo"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    android:textColor="@color/primary_blue" />
+                    android:textColor="@color/primary_blue"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/label_version_number"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary"
-                    android:layout_marginBottom="32dp"/>
+                    android:layout_marginBottom="32dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
                 <!-- description of the app's mission -->
                 <com.google.android.material.card.MaterialCardView
@@ -98,7 +104,7 @@
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/surface_light">
+                    app:cardBackgroundColor="@color/background_gray">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

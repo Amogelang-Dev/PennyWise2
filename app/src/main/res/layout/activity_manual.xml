@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
         <!-- Header bar with menu navigation -->
         <LinearLayout
@@ -70,8 +70,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -79,13 +80,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_dashboard_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -100,8 +103,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,13 +113,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_expenses_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -130,8 +136,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -139,13 +146,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_budgeting_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -160,8 +169,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -169,13 +179,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_reports_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -190,8 +202,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -199,13 +212,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_gamification_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -220,8 +235,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -229,13 +245,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_profile_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -250,8 +268,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -259,13 +278,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_offline_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -280,7 +301,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="24dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -288,13 +311,15 @@
                         android:orientation="vertical"
                         android:padding="16dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manual_tips_title"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary_blue"
-                            android:layout_marginBottom="8dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

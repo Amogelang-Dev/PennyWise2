@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
         <!-- Top navigation bar with menu button and title -->
         <LinearLayout
@@ -67,21 +67,24 @@
 
                 <!-- Preferences section for fundamental app behavior like currency and budget cycles -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/label_preferences"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/secondary_green"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/transaction_card_bg"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -101,9 +104,38 @@
                                 android:layout_weight="1"
                                 android:text="@string/label_currency"
                                 android:textSize="16sp"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_primary"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
                             <Spinner
                                 android:id="@+id/spinnerCurrency"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_light"
+                            android:layout_marginBottom="16dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_language"
+                                android:textSize="16sp"
+                                android:textColor="@color/text_primary"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
+                            <Spinner
+                                android:id="@+id/spinnerLanguage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
@@ -123,33 +155,40 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/label_budget_start_date"
+                                android:text="@string/label_change_password"
                                 android:textSize="16sp"
-                                android:textColor="@color/text_primary"/>
-                            <Spinner
-                                android:id="@+id/spinnerStartDate"
+                                android:textColor="@color/text_primary"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
+                            <Button
+                                android:id="@+id/btnChangePassword"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@string/btn_edit"
+                                style="@style/Widget.Material3.Button.TextButton"/>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Appearance & Alerts section for UI themes and notification preferences -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/label_appearance_alerts"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/secondary_green"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/transaction_card_bg"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -169,7 +208,9 @@
                                 android:layout_weight="1"
                                 android:text="@string/label_dark_mode"
                                 android:textSize="16sp"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_primary"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
                             <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/switchDarkMode"
                                 android:layout_width="wrap_content"
@@ -193,7 +234,9 @@
                                 android:layout_weight="1"
                                 android:text="@string/label_notifications"
                                 android:textSize="16sp"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="@color/text_primary"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
                             <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/switchNotifications"
                                 android:layout_width="wrap_content"
@@ -205,20 +248,23 @@
 
                 <!-- Account & Support section providing links to profile management and app info -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/label_account_support"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/secondary_green"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/transaction_card_bg"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -234,7 +280,9 @@
                             android:textSize="16sp"
                             android:textColor="@color/text_primary"
                             app:drawableEndCompat="@android:drawable/ic_menu_edit"
-                            android:background="?attr/selectableItemBackground"/>
+                            android:background="?attr/selectableItemBackground"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
 
                         <View
                             android:layout_width="match_parent"
@@ -250,26 +298,31 @@
                             android:textSize="16sp"
                             android:textColor="@color/text_primary"
                             app:drawableEndCompat="@android:drawable/ic_menu_info_details"
-                            android:background="?attr/selectableItemBackground"/>
+                            android:background="?attr/selectableItemBackground"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Data Management section for clearing stored user data -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/label_data_management"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/secondary_green"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/transaction_card_bg"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="32dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -298,8 +351,8 @@
             android:background="@color/primary_blue"
             app:menu="@menu/bottom_menu"
             app:labelVisibilityMode="labeled"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/nav_item_color"
+            app:itemIconTint="@color/nav_item_color"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <!-- Generic loading overlay for asynchronous settings updates -->

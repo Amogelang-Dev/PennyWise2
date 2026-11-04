@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
         <!-- Toolbar with Menu and Section Title -->
         <LinearLayout
@@ -61,8 +61,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
 
                     <LinearLayout
@@ -75,14 +76,16 @@
                             android:text="@string/label_amount"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:layout_marginBottom="4dp"/>
                         <EditText
                             android:id="@+id/etAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/surface_light"
+                            android:background="@android:color/transparent"
                             android:textColor="@color/text_primary"
                             android:inputType="numberDecimal"
                             android:padding="12dp"
@@ -98,14 +101,16 @@
                             android:text="@string/label_description"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:layout_marginBottom="4dp"/>
                         <EditText
                             android:id="@+id/etDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/surface_light"
+                            android:background="@android:color/transparent"
                             android:textColor="@color/text_primary"
                             android:padding="12dp"
                             android:autofillHints="none" />
@@ -120,14 +125,16 @@
                             android:text="@string/label_category"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:layout_marginBottom="4dp"/>
                         <Spinner
                             android:id="@+id/spCategory"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:background="@color/surface_light"/>
+                            android:background="@android:color/transparent"/>
 
                         <!-- Dynamic field for 'Other' categories -->
                         <LinearLayout
@@ -141,14 +148,16 @@
                                 android:text="@string/label_custom_category_display"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:maxLines="2"
+                                android:ellipsize="end"
                                 android:layout_marginBottom="4dp"/>
                             <EditText
                                 android:id="@+id/etCustomCategory"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/surface_light"
+                                android:background="@android:color/transparent"
                                 android:hint="@string/hint_custom_category"
                                 android:textColor="@color/text_primary"
                                 android:padding="12dp"
@@ -163,8 +172,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="16dp">
 
                     <LinearLayout
@@ -177,14 +187,16 @@
                             android:text="@string/label_date"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:layout_marginBottom="4dp"/>
                         <EditText
                             android:id="@+id/etDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/surface_light"
+                            android:background="@android:color/transparent"
                             android:textColor="@color/text_primary"
                             android:padding="12dp"
                             android:focusable="false"
@@ -214,14 +226,16 @@
                                     android:text="@string/label_start_time"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
                                     android:layout_marginBottom="4dp"/>
                                 <EditText
                                     android:id="@+id/etStartTime"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/surface_light"
+                                    android:background="@android:color/transparent"
                                     android:textColor="@color/text_primary"
                                     android:padding="12dp"
                                     android:focusable="false"
@@ -240,14 +254,16 @@
                                     android:text="@string/label_end_time"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
                                     android:layout_marginBottom="4dp"/>
                                 <EditText
                                     android:id="@+id/etEndTime"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/surface_light"
+                                    android:background="@android:color/transparent"
                                     android:textColor="@color/text_primary"
                                     android:padding="12dp"
                                     android:focusable="false"
@@ -264,8 +280,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/surface_light"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="24dp">
 
                     <LinearLayout
@@ -278,8 +295,10 @@
                             android:text="@string/label_upload_receipt"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:layout_marginBottom="8dp"/>
                         <Button
                             android:id="@+id/btnUpload"
@@ -288,20 +307,21 @@
                             android:text="@string/btn_choose_image"
                             android:backgroundTint="@color/primary_blue"
                             android:textColor="@color/white"
+                            app:cornerRadius="4dp"
                             android:layout_marginBottom="12dp"/>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             app:cardCornerRadius="8dp"
-                            app:strokeWidth="1dp"
-                            app:strokeColor="@color/gray_light">
+                            app:strokeWidth="0dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@color/surface_light">
                             <ImageView
                                 android:id="@+id/imgReceipt"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerInside"
-                                android:background="@color/surface_light"
                                 android:src="@android:drawable/ic_menu_gallery"
                                 android:contentDescription="@string/desc_receipt_preview" />
                         </com.google.android.material.card.MaterialCardView>
@@ -329,8 +349,8 @@
             android:background="@color/primary_blue"
             app:menu="@menu/bottom_menu"
             app:labelVisibilityMode="labeled"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"/>
+            app:itemIconTint="@color/nav_item_color"
+            app:itemTextColor="@color/nav_item_color"/>
 
     </LinearLayout>
 

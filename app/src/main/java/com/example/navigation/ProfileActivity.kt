@@ -18,9 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
+import android.util.Log
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
 
+    private val TAG = "ProfileActivity"
     private lateinit var ivProfileImage: ImageView
     private lateinit var etUsername: TextInputEditText
     private lateinit var etEmail: TextInputEditText
@@ -55,6 +57,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate: Initializing Profile")
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
 
@@ -98,7 +101,7 @@ class ProfileActivity : AppCompatActivity() {
 
         // Bottom navigation setup.
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNav.selectedItemId = 0 
+        bottomNav.selectedItemId = -1 // Clear selection since Profile is not in the bottom nav
         
         bottomNav.setOnItemSelectedListener {
             val intent = when (it.itemId) {
@@ -198,6 +201,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             loadingOverlay.visibility = View.VISIBLE
+            Log.d(TAG, "Saving profile changes for user: $newName")
 
             android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
                 val editor = userPref.edit()
@@ -214,6 +218,7 @@ class ProfileActivity : AppCompatActivity() {
                 
                 editor.apply()
                 loadingOverlay.visibility = View.GONE
+                Log.i(TAG, "Profile updated successfully")
                 Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
             }, 600)
         }
@@ -277,14 +282,13 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateBadgeUI(isUnlocked: Boolean, icon: ImageView, text: TextView) {
+        // Force fully visible badges as requested
+        icon.alpha = 1.0f
+        icon.clearColorFilter()
         if (isUnlocked) {
-            icon.alpha = 1.0f
-            icon.clearColorFilter()
             text.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
         } else {
-            icon.alpha = 0.4f
-            icon.setColorFilter(ContextCompat.getColor(this, R.color.gray_light))
-            text.setTextColor(ContextCompat.getColor(this, R.color.gray_light))
+            text.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
         }
     }
 }

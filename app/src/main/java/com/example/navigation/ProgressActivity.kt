@@ -42,15 +42,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.draw.shadow
+import androidx.compose.foundation.border
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.draw.alpha
+import androidx.compose.foundation.Image
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.animation.core.*
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.BorderStroke
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-
 
 // data model for the user financial journey.
 data class BudgetMilestone(
@@ -67,7 +81,7 @@ enum class MilestoneStatus {
     LOCKED
 }
 
-class ProgressActivity : AppCompatActivity() {
+class ProgressActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private val TAG = "ProgressActivity"
@@ -254,7 +268,7 @@ fun BudgetTrackingMap(
 ) {
     val scrollState = rememberScrollState()
     
-    // Auto-scroll to the bottom (start of journey) on first load so the user sees their current start point.
+    // Auto-scroll to the bottom (start of journey) on first load.
     LaunchedEffect(scrollState.maxValue) {
         if (scrollState.maxValue > 0) {
             scrollState.scrollTo(scrollState.maxValue)
@@ -264,44 +278,67 @@ fun BudgetTrackingMap(
     val disabledGray = colorResource(id = R.color.gray_light)
     val textPrimary = colorResource(id = R.color.text_primary)
     val bgColor = colorResource(id = R.color.background_gray)
+    val successGreen = colorResource(id = R.color.success_green)
 
     Column(modifier = modifier.fillMaxSize().background(bgColor)) {
-        // Header Status Card: Quick glance at total XP and a traditional progress bar.
+        // Enhanced Header Status Card
         Card(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             colors = CardDefaults.cardColors(containerColor = cardBg),
-            elevation = CardDefaults.cardElevation(4.dp)
+            elevation = CardDefaults.cardElevation(6.dp),
+            shape = RoundedCornerShape(16.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(20.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Total Progress", fontWeight = FontWeight.Bold, color = textPrimary)
-                    Text("$userTotalXP XP", fontWeight = FontWeight.ExtraBold, color = accentBlue, fontSize = 18.sp)
+                    Column {
+                        Text("Financial Rank", fontSize = 12.sp, color = Color.Gray)
+                        val currentMilestone = milestones.lastOrNull { it.status == MilestoneStatus.COMPLETED }?.title ?: "Beginner"
+                        Text(currentMilestone, fontWeight = FontWeight.ExtraBold, color = textPrimary, fontSize = 20.sp)
+                    }
+                    Box(
+                        modifier = Modifier
+                            .background(accentBlue.copy(alpha = 0.1f), CircleShape)
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
+                    ) {
+                        Text("$userTotalXP XP", fontWeight = FontWeight.Bold, color = accentBlue, fontSize = 16.sp)
+                    }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                val maxXP = 1000f
-                val progress = (userTotalXP.toFloat() / maxXP).coerceIn(0f, 1f)
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier.fillMaxWidth().height(8.dp),
-                    color = accentBlue,
-                    trackColor = disabledGray,
-                    strokeCap = StrokeCap.Round
-                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                val nextMilestone = milestones.firstOrNull { it.status != MilestoneStatus.COMPLETED }
+                if (nextMilestone != null) {
+                    val progressToNext = (userTotalXP.toFloat() / nextMilestone.requiredXP).coerceIn(0f, 1f)
+                    Text(
+                        text = stringResource(id = R.string.xp_status_placeholder, nextMilestone.requiredXP - userTotalXP),
+                        fontSize = 12.sp,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(bottom = 4.dp)
+                    )
+                    LinearProgressIndicator(
+                        progress = { progressToNext },
+                        modifier = Modifier.fillMaxWidth().height(10.dp),
+                        color = accentBlue,
+                        trackColor = disabledGray.copy(alpha = 0.3f),
+                        strokeCap = StrokeCap.Round
+                    )
+                } else {
+                    Text(stringResource(id = R.string.xp_max_tier), fontWeight = FontWeight.Bold, color = successGreen)
+                }
             }
         }
 
-        // The milestone map: A custom Canvas for the path + a Box for the overlaying nodes.
         Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
         ) {
-            val pathHeight = 900.dp 
+            val pathHeight = 1000.dp 
 
             Canvas(modifier = Modifier
                 .fillMaxWidth()
@@ -309,23 +346,27 @@ fun BudgetTrackingMap(
                 val w = size.width
                 val h = size.height
 
-                // We define an S-shaped path using cubic Beziers.
+                // Smoother S-curve path
                 val trackPath = Path().apply {
-                    moveTo(w * 0.5f, h * 0.9f)
-                    cubicTo(w * 0.1f, h * 0.75f, w * 0.9f, h * 0.55f, w * 0.5f, h * 0.4f)
-                    cubicTo(w * 0.1f, h * 0.25f, w * 0.5f, h * 0.15f, w * 0.5f, h * 0.05f)
+                    moveTo(w * 0.5f, h * 0.95f)
+                    cubicTo(w * 0.05f, h * 0.8f, w * 0.95f, h * 0.65f, w * 0.5f, h * 0.5f)
+                    cubicTo(w * 0.05f, h * 0.35f, w * 0.95f, h * 0.2f, w * 0.5f, h * 0.05f)
                 }
 
                 val progressRatio = (userTotalXP.toFloat() / 1000f).coerceIn(0f, 1f)
                 
-                // Draw the full background track in gray.
+                // 1. Draw dashed background track
                 drawPath(
                     path = trackPath,
-                    color = disabledGray,
-                    style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
+                    color = disabledGray.copy(alpha = 0.5f),
+                    style = Stroke(
+                        width = 8.dp.toPx(), 
+                        cap = StrokeCap.Round,
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(20f, 20f), 0f)
+                    )
                 )
 
-                // Draw the active part of the track (blue) using a vertical gradient clip to simulate progress.
+                // 2. Draw active solid track
                 drawPath(
                     path = trackPath,
                     brush = Brush.verticalGradient(
@@ -334,13 +375,12 @@ fun BudgetTrackingMap(
                         (1f - progressRatio).coerceIn(0f, 1f) to accentBlue,
                         1.0f to accentBlue,
                         startY = h * 0.05f,
-                        endY = h * 0.9f
+                        endY = h * 0.95f
                     ),
                     style = Stroke(width = 10.dp.toPx(), cap = StrokeCap.Round)
                 )
             }
 
-            // Overlaying the clickable milestone nodes on top of the Canvas path.
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -350,23 +390,20 @@ fun BudgetTrackingMap(
                     val milestoneXP = milestone.requiredXP.toFloat()
                     val ratio = (milestoneXP / 1000f)
                     
-                    // Positioning logic to match the Bezier points above.
-                    val yPos = (0.9f - ratio * 0.85f) * pathHeight.value
+                    val yPos = (0.95f - ratio * 0.9f) * pathHeight.value
                     
-                    // xOffset mapping to follow the S-curve bends.
                     val xOffset = when {
                         milestoneXP <= 50 -> 0.dp
-                        milestoneXP <= 150 -> (-110).dp
-                        milestoneXP <= 300 -> (-60).dp
-                        milestoneXP <= 600 -> 110.dp
-                        milestoneXP <= 850 -> 50.dp
-                        else -> 0.dp
+                        milestoneXP <= 300 -> (-110).dp 
+                        milestoneXP <= 500 -> 0.dp      
+                        milestoneXP <= 800 -> 110.dp     
+                        else -> 0.dp                     
                     }
 
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
-                            .offset(x = xOffset, y = yPos.dp - 40.dp),
+                            .offset(x = xOffset, y = yPos.dp - 30.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         MilestoneNode(
@@ -375,7 +412,6 @@ fun BudgetTrackingMap(
                             surfaceColor = cardBg,
                             textPrimary = textPrimary,
                             onClick = { 
-                                Log.d("BudgetMap", "User tapped on ${milestone.title}")
                                 if (milestone.status != MilestoneStatus.LOCKED) onMilestoneClick(milestone) 
                             }
                         )
@@ -400,6 +436,9 @@ fun MilestoneNode(
         MilestoneStatus.LOCKED -> colorResource(id = R.color.gray_medium)
     }
 
+    val isPremium = milestone.requiredXP >= 500
+    val premiumColor = if (milestone.requiredXP >= 1000) colorResource(id = R.color.premium_gold) else colorResource(id = R.color.premium_silver)
+
     val icon = when (milestone.requiredXP) {
         10 -> Icons.Default.ShoppingCart // Novice
         100 -> Icons.Default.Build // Saver
@@ -409,15 +448,28 @@ fun MilestoneNode(
         else -> Icons.Default.CheckCircle
     }
 
+    // Floating animation for "Current" milestone
+    val infiniteTransition = rememberInfiniteTransition(label = "floating")
+    val dy by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = if (milestone.status == MilestoneStatus.CURRENT) -10f else 0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "dy"
+    )
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .width(120.dp)
+            .graphicsLayer { translationY = dy }
             .clickable { onClick() }
     ) {
         Box(
             modifier = Modifier
-                .size(56.dp)
+                .size(64.dp)
                 .background(
                     color = if (milestone.status == MilestoneStatus.CURRENT) statusColor.copy(alpha = 0.2f) else Color.Transparent,
                     shape = CircleShape
@@ -426,11 +478,14 @@ fun MilestoneNode(
         ) {
             Box(
                 modifier = Modifier
-                    .size(44.dp)
+                    .size(50.dp)
+                    .shadow(if (isPremium) 8.dp else 2.dp, CircleShape)
                     .background(color = surfaceColor, shape = CircleShape)
                     .then(
-                        if (milestone.status != MilestoneStatus.LOCKED) 
-                            Modifier.background(statusColor.copy(alpha = 0.1f), CircleShape) 
+                        if (isPremium && milestone.status != MilestoneStatus.LOCKED)
+                            Modifier.border(2.dp, premiumColor, CircleShape)
+                        else if (milestone.status != MilestoneStatus.LOCKED)
+                            Modifier.background(statusColor.copy(alpha = 0.1f), CircleShape)
                         else Modifier
                     ),
                 contentAlignment = Alignment.Center
@@ -438,36 +493,65 @@ fun MilestoneNode(
                 Icon(
                     imageVector = if (milestone.status == MilestoneStatus.LOCKED) Icons.Default.Lock else icon,
                     contentDescription = "Status Icon",
-                    tint = statusColor,
-                    modifier = Modifier.size(24.dp)
+                    tint = if (isPremium && milestone.status != MilestoneStatus.LOCKED) premiumColor else statusColor,
+                    modifier = Modifier.size(28.dp).alpha(if (milestone.status == MilestoneStatus.LOCKED) 0.5f else 1f)
                 )
+
+                if (milestone.status == MilestoneStatus.LOCKED && isPremium) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(colorResource(id = R.color.locked_overlay).copy(alpha = 0.1f), CircleShape)
+                    )
+                }
+            }
+            
+            // Premium Badge
+            if (isPremium) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .offset(x = 4.dp, y = (-4).dp)
+                        .background(premiumColor, CircleShape)
+                        .padding(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Premium",
+                        tint = Color.White,
+                        modifier = Modifier.size(10.dp)
+                    )
+                }
             }
         }
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(6.dp))
 
         Card(
-            colors = CardDefaults.cardColors(containerColor = surfaceColor),
-            elevation = CardDefaults.cardElevation(2.dp),
-            shape = RoundedCornerShape(8.dp)
+            colors = CardDefaults.cardColors(
+                containerColor = if (isPremium && milestone.status != MilestoneStatus.LOCKED) premiumColor.copy(alpha = 0.1f) else surfaceColor
+            ),
+            elevation = CardDefaults.cardElevation(if (milestone.status == MilestoneStatus.CURRENT) 6.dp else 2.dp),
+            shape = RoundedCornerShape(12.dp),
+            border = if (milestone.status == MilestoneStatus.CURRENT) BorderStroke(1.dp, statusColor) else null
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
             ) {
                 Text(
                     text = milestone.title,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.ExtraBold,
                     color = textPrimary,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    lineHeight = 12.sp
+                    lineHeight = 13.sp
                 )
                 Text(
                     text = "${milestone.requiredXP} XP",
-                    fontSize = 9.sp,
-                    color = statusColor,
-                    fontWeight = FontWeight.ExtraBold
+                    fontSize = 10.sp,
+                    color = if (isPremium && milestone.status != MilestoneStatus.LOCKED) premiumColor else statusColor,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }

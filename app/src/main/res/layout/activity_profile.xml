@@ -5,15 +5,16 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/surface_light"
     tools:context=".ProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
-        <!-- Header section with a menu button and the screen title -->
+        <!-- Consistent Blue Top Toolbar -->
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -56,6 +57,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
             app:layout_constraintTop_toBottomOf="@id/header"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation">
 
@@ -63,171 +66,243 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
-                android:gravity="center_horizontal">
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp">
 
-                <!-- Profile picture area with an edit button to change the photo -->
-                <FrameLayout
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="16dp">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/iv_profile_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@android:drawable/ic_menu_report_image"
-                        android:scaleType="centerCrop"
-                        android:background="@color/surface_light"
-                        android:padding="2dp"
-                        app:shapeAppearanceOverlay="@style/CircleImage"
-                        app:strokeColor="@color/primary_blue"
-                        app:strokeWidth="2dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_edit_photo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:src="@android:drawable/ic_menu_camera"
-                        app:fabSize="mini"
-                        app:backgroundTint="@color/primary_blue"
-                        app:tint="@color/white"
-                        android:contentDescription="@string/desc_edit_photo" />
-                </FrameLayout>
-
-                <!-- Gamification Section: XP and Level -->
+                <!-- Instagram Bio & Stats Grid Block -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/rounded_surface"
-                    android:padding="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:gravity="center">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:baselineAligned="false"
+                    android:layout_marginBottom="16dp">
 
-                    <TextView
-                        android:id="@+id/tv_xp_level"
-                        android:layout_width="wrap_content"
+                    <!-- Profile Picture with Camera Action Fab Overlay -->
+                    <FrameLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/iv_profile_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@android:drawable/ic_menu_report_image"
+                            android:scaleType="centerCrop"
+                            android:background="@color/gray_light"
+                            android:padding="3dp"
+                            app:shapeAppearanceOverlay="@style/CircleImage"
+                            app:strokeColor="@color/primary_blue"
+                            app:strokeWidth="2dp" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_edit_photo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="4dp"
+                            android:contentDescription="@string/desc_edit_photo"
+                            android:src="@android:drawable/ic_menu_camera"
+                            app:backgroundTint="@color/primary_blue"
+                            app:fabCustomSize="28dp"
+                            app:maxImageSize="16dp"
+                            app:tint="@color/white"
+                            app:borderWidth="0dp"
+                            app:elevation="2dp" />
+                    </FrameLayout>
+
+                    <!-- Horizontal Instagram Stats Column -->
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_financial_novice"
-                        android:textColor="@color/primary_blue"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:baselineAligned="false">
 
-                    <TextView
-                        android:id="@+id/tv_xp_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/placeholder_zero_percent"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
+                        <!-- XP Metric -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/tv_xp_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/placeholder_zero_percent"
+                                android:textColor="@color/text_primary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_total_xp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
-                    <ProgressBar
-                        android:id="@+id/pb_xp"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:layout_marginTop="12dp"
-                        android:progress="25"
-                        android:max="100"
-                        android:progressDrawable="@drawable/progress_bar_blue" />
+                        <!-- Level Indicator -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/tv_xp_level"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_financial_novice"
+                                android:textColor="@color/primary_blue"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:textAlignment="center" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_finance_level"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
 
-                <!-- Achievements Section -->
+                <!-- XP Line Progress indicator matching WhatsApp / Instagram clean bars -->
+                <ProgressBar
+                    android:id="@+id/pb_xp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginBottom="20dp"
+                    android:progress="25"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_bar_blue" />
+
+                <!-- Instagram Highlights Section (Badges) -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/label_achievements_title"
                     android:textColor="@color/text_primary"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="12dp" />
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    android:layout_marginBottom="24dp">
+                    android:layout_marginBottom="20dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
 
-                        <!-- Achievement Item 1: Receipt Ninja -->
+                        <!-- Achievement 1: Receipt Ninja -->
                         <LinearLayout
                             android:id="@+id/layout_achievement_receipt"
-                            android:layout_width="80dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:layout_marginEnd="16dp">
-                            <ImageView
+                            android:layout_marginEnd="12dp">
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/iv_achievement_receipt"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@android:drawable/btn_star_big_on"
+                                android:background="@color/background_gray"
+                                android:padding="10dp"
+                                app:shapeAppearanceOverlay="@style/CircleImage"
+                                app:strokeColor="@color/gray_light"
+                                app:strokeWidth="1dp"
                                 android:contentDescription="@string/desc_achievement_icon" />
                             <TextView
                                 android:id="@+id/tv_achievement_receipt"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/milestone_receipt_title"
                                 android:textSize="11sp"
                                 android:textAlignment="center"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/text_secondary" />
+                                android:layout_marginTop="6dp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@color/text_primary"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
-                        <!-- Achievement Item 2: Budget Warrior -->
+                        <!-- Achievement 2: Budget Warrior -->
                         <LinearLayout
                             android:id="@+id/layout_achievement_budget"
-                            android:layout_width="80dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:layout_marginEnd="16dp">
-                            <ImageView
+                            android:layout_marginEnd="12dp">
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/iv_achievement_budget"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@android:drawable/ic_dialog_info"
+                                android:background="@color/background_gray"
+                                android:padding="10dp"
+                                app:shapeAppearanceOverlay="@style/CircleImage"
+                                app:strokeColor="@color/gray_light"
+                                app:strokeWidth="1dp"
                                 android:contentDescription="@string/desc_achievement_icon" />
                             <TextView
                                 android:id="@+id/tv_achievement_budget"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/milestone_budget_title"
                                 android:textSize="11sp"
                                 android:textAlignment="center"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/text_secondary" />
+                                android:layout_marginTop="6dp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@color/text_primary"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
-                        <!-- Achievement Item 3: Consistent Tracker -->
+                        <!-- Achievement 3: Consistent Tracker -->
                         <LinearLayout
                             android:id="@+id/layout_achievement_tracker"
-                            android:layout_width="80dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="center">
-                            <ImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/iv_achievement_tracker"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@android:drawable/ic_menu_today"
+                                android:background="@color/background_gray"
+                                android:padding="10dp"
+                                app:shapeAppearanceOverlay="@style/CircleImage"
+                                app:strokeColor="@color/gray_light"
+                                app:strokeWidth="1dp"
                                 android:contentDescription="@string/desc_achievement_icon" />
                             <TextView
                                 android:id="@+id/tv_achievement_tracker"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/milestone_tracker_title"
                                 android:textSize="11sp"
                                 android:textAlignment="center"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/text_secondary" />
+                                android:layout_marginTop="6dp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textColor="@color/text_primary"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -237,68 +312,117 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_light"
-                    android:layout_marginBottom="24dp" />
+                    android:layout_marginBottom="20dp" />
 
-                <!-- Input field for the user's display name -->
-                <com.google.android.material.textfield.TextInputLayout
+                <!-- Account Information Card -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_username"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="16dp"
-                    app:startIconDrawable="@android:drawable/ic_menu_myplaces">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_username"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
+                    android:layout_marginBottom="24dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                <!-- Input field for the user's email address -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_email_address"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="16dp"
-                    app:startIconDrawable="@android:drawable/ic_dialog_email">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_account_info"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="12dp"
+                            android:textAllCaps="true"
+                            android:letterSpacing="0.05" />
 
-                <!-- Input field for a new password, featuring a visibility toggle -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_new_password"
-                    app:passwordToggleEnabled="true"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="16dp"
-                    app:startIconDrawable="@android:drawable/ic_lock_idle_lock">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        <!-- Username Input Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_username"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="14dp"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue"
+                            app:startIconDrawable="@drawable/ic_person"
+                            app:startIconTint="@color/primary_blue"
+                            app:boxBackgroundColor="@color/surface_light">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp"
+                                android:inputType="textPersonName"/>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Primary action button to commit profile changes -->
-                <Button
-                    android:id="@+id/btn_save_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="@string/btn_save_changes"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/primary_blue"
-                    app:cornerRadius="4dp"
-                    android:layout_marginTop="24dp"/>
+                        <!-- Email Input Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_email_address"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="14dp"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue"
+                            app:startIconDrawable="@drawable/ic_email"
+                            app:startIconTint="@color/primary_blue"
+                            app:boxBackgroundColor="@color/surface_light">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp"
+                                android:inputType="textEmailAddress"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Password Input Field -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_new_password"
+                            app:passwordToggleEnabled="true"
+                            app:passwordToggleTint="@color/gray_medium"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="20dp"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue"
+                            app:startIconDrawable="@drawable/ic_lock"
+                            app:startIconTint="@color/primary_blue"
+                            app:boxBackgroundColor="@color/surface_light">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp"
+                                android:inputType="textPassword"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Premium Clean Instagram Action Save Button -->
+                        <Button
+                            android:id="@+id/btn_save_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="@string/btn_save_changes"
+                            android:textColor="@color/white"
+                            android:backgroundTint="@color/primary_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="8dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
         </ScrollView>
 
+        <!-- Bottom Navigation: Switching between main features -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
@@ -306,16 +430,16 @@
             android:background="@color/primary_blue"
             app:menu="@menu/bottom_menu"
             app:labelVisibilityMode="labeled"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/nav_item_color"
+            app:itemIconTint="@color/nav_item_color"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <!-- Full-screen loading overlay shown during profile updates to provide feedback -->
+        <!-- Translucent Modal Loading Overlay Overlay -->
         <RelativeLayout
             android:id="@+id/loadingOverlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="#80000000"
+            android:background="#99000000"
             android:visibility="gone"
             android:clickable="true"
             android:focusable="true"
@@ -337,7 +461,8 @@
                 android:layout_marginTop="60dp"
                 android:text="@string/loading_updating_profile"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

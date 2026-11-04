@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 //import this , put them at the top of the code
+import com.google.android.material.textfield.TextInputEditText
 import android.util.Patterns
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.android.material.snackbar.Snackbar
@@ -18,10 +19,13 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import kotlin.concurrent.thread
+import android.util.Log
+import com.example.navigation.utils.SecurityUtils
 
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : BaseActivity() {
+    private val TAG = "FirstActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,10 +51,10 @@ class FirstActivity : AppCompatActivity() {
 
     // registration handling.
     fun home(view: View) {
-        val etUsername = findViewById<EditText>(R.id.et_username)
-        val etEmail = findViewById<EditText>(R.id.et_email)
-        val etPassword = findViewById<EditText>(R.id.et_password)
-        val etConfirmPassword = findViewById<EditText>(R.id.et_confirm_password)
+        val etUsername = findViewById<TextInputEditText>(R.id.et_username)
+        val etEmail = findViewById<TextInputEditText>(R.id.et_email)
+        val etPassword = findViewById<TextInputEditText>(R.id.et_password)
+        val etConfirmPassword = findViewById<TextInputEditText>(R.id.et_confirm_password)
 
         val username = etUsername.text.toString().trim()
         val email = etEmail.text.toString().trim()
@@ -108,18 +112,21 @@ class FirstActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val rootView = findViewById<View>(android.R.id.content)
 
+        Log.d(TAG, "Starting registration for user: $username")
+
         db.collection("users")
             .whereEqualTo("email", email)
             .get()
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
                     loadingOverlay.visibility = View.GONE
+                    Log.w(TAG, "Registration failed: Email $email already exists")
                     Snackbar.make(rootView, "Email already registered", Snackbar.LENGTH_LONG).show()
                 } else {
                     val user = hashMapOf(
                         "username" to username,
                         "email" to email,
-                        "password" to password,
+                        "password" to SecurityUtils.hashPassword(password),
                         "xp" to 0,
                         "streak" to 0,
                         "last_login" to ""
@@ -129,6 +136,7 @@ class FirstActivity : AppCompatActivity() {
                         .add(user)
                         .addOnSuccessListener {
                             loadingOverlay.visibility = View.GONE
+                            Log.i(TAG, "User registered successfully: $username")
                             // saving the user registration details locally.
                             editor.putString("REG_USER", username)
                             editor.putString("REG_EMAIL", email)
@@ -144,61 +152,18 @@ class FirstActivity : AppCompatActivity() {
                         }
                         .addOnFailureListener { exception ->
                             loadingOverlay.visibility = View.GONE
+                            Log.e(TAG, "Firestore error during registration", exception)
                             Snackbar.make(rootView, "Error: ${exception.message}", Snackbar.LENGTH_LONG).show()
                         }
                 }
             }
             .addOnFailureListener { exception ->
                 loadingOverlay.visibility = View.GONE
+                Log.e(TAG, "Firestore error checking email existence", exception)
                 Snackbar.make(rootView, "Error: ${exception.message}", Snackbar.LENGTH_LONG).show()
             }
     }
 
-    // this function connects to the php api to insert a new row in the database.
-    fun insertRow(
-        tableName: String,
-        data: Map< String, Any?>
-    ): String? {
-        val url = URL("https://studyplugtools.cloud/you_connect.php/$tableName/insert")
-        val connection = url.openConnection() as HttpURLConnection
-
-        return try {
-            connection.requestMethod = "POST"
-            connection.setRequestProperty("Content-Type", "application/json")
-            connection.setRequestProperty("Accept", "application/json")
-            connection.doOutput = true
-
-            // creating the json object from the data map.
-            val payload = JSONObject()
-            for ((key, value) in data) {
-                if (key != "id") {
-                    payload.put(key, value ?: "")
-                }
-            }
-
-            // sending the json data through the connection.
-            connection.outputStream.use { os ->
-                os.write(payload.toString().toByteArray(Charsets.UTF_8))
-                os.flush()
-            }
-
-            // reading the response coming back from the server.
-            val reader = BufferedReader(InputStreamReader(connection.inputStream))
-            val response = StringBuilder()
-            var line: String?
-            while (reader.readLine().also { line = it } != null) {
-                response.append(line)
-            }
-            reader.close()
-            response.toString()
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        } finally {
-            connection.disconnect()
-        }
-    }
 
     // switching to the login page.
     fun login_page(view: View) {
@@ -206,7 +171,7 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun validatePassword(password: String): Boolean {
-        val etPassword = findViewById<EditText>(R.id.et_password)
+        val etPassword = findViewById<TextInputEditText>(R.id.et_password)
         if (password.isEmpty()) {
             etPassword.error = "Password is required"
             return false

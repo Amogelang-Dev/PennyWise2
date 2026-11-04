@@ -16,10 +16,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import android.util.Log
 import java.util.*
 
-class ForthActivity : AppCompatActivity() {
+class ForthActivity : BaseActivity() {
 
+    private val TAG = "ForthActivity"
     private var selectedReceiptUri: Uri? = null
     private lateinit var receiptPreviewImage: ImageView
     private lateinit var sideDrawerLayout: DrawerLayout
@@ -41,7 +43,7 @@ class ForthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+        Log.d(TAG, "onCreate: Initializing Manual Expense Entry")
         // making the app look modern by drawing behind the system bars
         enableEdgeToEdge()
         setContentView(R.layout.activity_forth)
@@ -171,6 +173,7 @@ class ForthActivity : AppCompatActivity() {
             }
 
             // Save the data to our local SQLite database.
+            Log.i(TAG, "Saving manual expense: R$spentAmount, Category: $finalCategory")
             database.addExpense(
                 spentAmount,
                 finalCategory,

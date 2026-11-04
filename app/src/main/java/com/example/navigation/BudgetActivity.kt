@@ -15,9 +15,11 @@ import com.google.android.material.navigation.NavigationView
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+import android.util.Log
 
 
-class BudgetActivity : AppCompatActivity() {
+class BudgetActivity : BaseActivity() {
+    private val TAG = "BudgetActivity"
 
     // A function to make the numbers look like currency and not random numbers
     private fun formatCurrency(amount: Float): String {
@@ -33,7 +35,7 @@ class BudgetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+        Log.d(TAG, "onCreate: Initializing Budget Settings")
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_budget)
@@ -139,6 +141,7 @@ class BudgetActivity : AppCompatActivity() {
             }
 
             // Storing the data so the rest of the app can use it
+            Log.i(TAG, "Saving budget goals: Income=$incomeValue, Min=$minBudgetValue, Max=$maxBudgetValue")
             financialPrefs.edit()
                 .putFloat("BUDGET", incomeValue)
                 .putFloat("MIN_BUDGET", minBudgetValue)

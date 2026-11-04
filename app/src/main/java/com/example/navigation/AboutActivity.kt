@@ -13,7 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
-class AboutActivity : AppCompatActivity() {
+class AboutActivity : BaseActivity() {
 
     private lateinit var sideMenuDrawer: DrawerLayout
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PennyWise</string>
+    <string name="welcome_text">Ingaba ukulungele ukulawula imali yakho?</string>
+    <string name="welcome_text2">Vumela uPennyWise akuncede ulandelele indlela osebenzisa ngayo imali, ukhulise imali oyigcinileyo, kwaye wenze yonke isenti ibaluleke!</string>
+    <string name="btn_started">Qala ngoku</string>
+    <string name="btn_login">Ngena</string>
+    <string name="btn_register">Bhalisa</string>
+    <string name="title_home">Pennywise</string>
+    <string name="in_my_pocket">Epokothweni yam</string>
+    <string name="income_label">Ingeniso</string>
+    <string name="expenses_label">Inkcitho</string>
+    <string name="recent_transactions">Imisebenzi yakutshanje</string>
+    <string name="msg_welcome_user">Kuhle ukukubona, %1$s</string>
+    <string name="label_amount_negative">- %1$s</string>
+    <string name="btn_save_expense">Gcina Inkcitho</string>
+    <string name="label_achievements_title">Izinto Eziphunyeziweyo</string>
+    <string name="milestone_receipt_title">Ninja Yeirisithi</string>
+    <string name="milestone_budget_title">Iqhawe Lohlahlo-lwabiwo-mali</string>
+    <string name="milestone_tracker_title">Umkhondo Ongagungqiyo</string>
+    <string name="label_account_info">Ulwazi Lwe-akhawunti</string>
+    <string name="label_total_xp">I-XP Iyonke</string>
+    <string name="label_finance_level">Inqanaba Lezezimali</string>
+    <string name="label_financial_novice">Osaqalayo Kwezezimali</string>
+    <string name="label_saver">Umongi</string>
+    <string name="label_strategist">Umcwangcisi</string>
+    <string name="label_wealth_builder">Umaki Wobutyebi</string>
+    <string name="label_generational_wealth_builder">Umaki Wobutyebi Bezizukulwana</string>
+    <string name="btn_save_changes">Gcina Utshintsho</string>
+    <string name="hint_username">Igama Lomsebenzisi</string>
+    <string name="hint_email_address">Idilesi ye-imeyili</string>
+    <string name="hint_new_password">Iphasiwedi Entsha</string>
+    <string name="title_profile">Iprofayile</string>
+    <string name="label_current_xp">%1$d / %2$d XP</string>
+    <string name="label_usage_limit">Ukusetyenziswa Komda</string>
+</resources>

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- The dark mode version of the app's main theme -->
-    <style name="Theme.Navigation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Navigation" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Main colors adjusted to look better on dark backgrounds -->
         <item name="colorPrimary">@color/primary_blue</item>
-        <item name="colorPrimaryVariant">@color/primary_blue_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary accent colors for dark mode -->
         <item name="colorSecondary">@color/secondary_green</item>
-        <item name="colorSecondaryVariant">@color/secondary_green</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Surface and Background colors for Dark Mode -->
@@ -23,5 +21,16 @@
         <item name="android:navigationBarColor">@color/background_gray</item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
+        <!-- Bottom Navigation Customization -->
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
+    </style>
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary_blue</item>
     </style>
 </resources>

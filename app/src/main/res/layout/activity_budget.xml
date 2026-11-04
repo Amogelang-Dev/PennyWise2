@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
         <!-- Top bar with a sidebar menu toggle and page title -->
         <LinearLayout
@@ -57,80 +57,94 @@
                 android:padding="20dp">
 
                 <!-- Budget Parameters: A unified card for data entry -->
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="@drawable/rounded_surface"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/background_gray"
                     android:layout_marginBottom="32dp">
 
-                    <!-- monthly income-->
-                    <TextView
-                        android:text="@string/label_monthly_income"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"/>
-                    <EditText
-                        android:id="@+id/etPocket"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_income"
-                        android:inputType="numberDecimal"
-                        android:background="@color/surface_light"
-                        android:padding="12dp"
-                        android:autofillHints="none" />
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_light"
-                        android:layout_marginVertical="20dp"/>
+                        <!-- monthly income-->
+                        <TextView
+                            android:text="@string/label_monthly_income"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:layout_marginBottom="8dp"/>
+                        <EditText
+                            android:id="@+id/etPocket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_income"
+                            android:inputType="numberDecimal"
+                            android:background="@android:color/transparent"
+                            android:padding="12dp"
+                            android:autofillHints="none" />
 
-                    <!-- minimum budget goal -->
-                    <TextView
-                        android:text="@string/label_min_budget"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"/>
-                    <EditText
-                        android:id="@+id/etMinBudget"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_min_goal"
-                        android:inputType="numberDecimal"
-                        android:background="@color/surface_light"
-                        android:padding="12dp"
-                        android:autofillHints="none" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_light"
+                            android:layout_marginVertical="20dp"/>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_light"
-                        android:layout_marginVertical="20dp"/>
+                        <!-- minimum budget goal -->
+                        <TextView
+                            android:text="@string/label_min_budget"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:layout_marginBottom="8dp"/>
+                        <EditText
+                            android:id="@+id/etMinBudget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_min_goal"
+                            android:inputType="numberDecimal"
+                            android:background="@android:color/transparent"
+                            android:padding="12dp"
+                            android:autofillHints="none" />
 
-                    <!-- maximum budget goal -->
-                    <TextView
-                        android:text="@string/label_max_budget"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"/>
-                    <EditText
-                        android:id="@+id/etMaxBudget"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_spending_limit"
-                        android:inputType="numberDecimal"
-                        android:background="@color/surface_light"
-                        android:padding="12dp"
-                        android:autofillHints="none" />
-                </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_light"
+                            android:layout_marginVertical="20dp"/>
+
+                        <!-- maximum budget goal -->
+                        <TextView
+                            android:text="@string/label_max_budget"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:layout_marginBottom="8dp"/>
+                        <EditText
+                            android:id="@+id/etMaxBudget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_spending_limit"
+                            android:inputType="numberDecimal"
+                            android:background="@android:color/transparent"
+                            android:padding="12dp"
+                            android:autofillHints="none" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- locking in the budget -->
                 <Button
@@ -144,7 +158,7 @@
                     android:insetBottom="0dp"
                     app:cornerRadius="4dp"
                     android:textStyle="bold"
-                    android:elevation="4dp"/>
+                    android:elevation="0dp"/>
 
             </LinearLayout>
         </ScrollView>
@@ -157,8 +171,8 @@
             android:background="@color/primary_blue"
             app:menu="@menu/bottom_menu"
             app:labelVisibilityMode="labeled"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white"/>
+            app:itemTextColor="@color/nav_item_color"
+            app:itemIconTint="@color/nav_item_color"/>
 
     </LinearLayout>
 

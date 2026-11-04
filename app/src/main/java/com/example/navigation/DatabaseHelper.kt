@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_NAME = "Pennywise.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val EXPENSES_TABLE = "expenses"
 
         // Column names for our spreadsheet-like table.
@@ -23,6 +23,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val START_TIME_COL = "start_time"
         private const val END_TIME_COL = "end_time"
         private const val RECEIPT_COL = "receipt_uri"
+        private const val SYNCED_COL = "synced"
     }
 
     // This runs the very first time the app is opened to build the vault structure.
@@ -35,7 +36,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + DATE_COL + " TEXT,"
                 + START_TIME_COL + " TEXT,"
                 + END_TIME_COL + " TEXT,"
-                + RECEIPT_COL + " TEXT" + ")")
+                + RECEIPT_COL + " TEXT,"
+                + SYNCED_COL + " INTEGER DEFAULT 0" + ")")
         db?.execSQL(createQuery)
     }
 
@@ -110,6 +112,20 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         if (result.moveToFirst()) count = result.getInt(0)
         result.close()
         return count
+    }
+
+    fun getUnsyncedExpenses(): Cursor {
+        val db = this.readableDatabase
+        return db.rawQuery("SELECT * FROM $EXPENSES_TABLE WHERE $SYNCED_COL = 0", null)
+    }
+
+    fun markAsSynced(id: Long) {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(SYNCED_COL, 1)
+        }
+        db.update(EXPENSES_TABLE, values, "$ID_COL = ?", arrayOf(id.toString()))
+        db.close()
     }
 
     //returns the total number of the logs in the vault.

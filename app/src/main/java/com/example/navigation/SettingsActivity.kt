@@ -16,16 +16,22 @@ import androidx.drawerlayout.widget.DrawerLayout
 import android.provider.Settings
 import android.content.ComponentName
 import android.text.TextUtils
+import android.util.Log
+import com.example.navigation.utils.SecurityUtils
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import java.util.*
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
+    private val TAG = "SettingsActivity"
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var sideMenuDrawer: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate: Initializing Settings")
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
         
@@ -71,7 +77,7 @@ class SettingsActivity : AppCompatActivity() {
 
         // Bottom navigation setup.
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNav.selectedItemId = 0 // Settings is not in bottom nav, but we can clear selection or leave as is.
+        bottomNav.selectedItemId = -1 // Settings is not in bottom nav, clear selection
         
         bottomNav.setOnItemSelectedListener {
             val intent = when (it.itemId) {
@@ -94,6 +100,59 @@ class SettingsActivity : AppCompatActivity() {
         setupSwitches()
         setupNavigationLinks()
         setupDataManagement()
+        setupPasswordChange()
+    }
+
+    private fun setupPasswordChange() {
+        findViewById<Button>(R.id.btnChangePassword).setOnClickListener {
+            showChangePasswordDialog()
+        }
+    }
+
+    private fun showChangePasswordDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)
+        val etCurrent = dialogView.findViewById<EditText>(R.id.etCurrentPassword)
+        val etNew = dialogView.findViewById<EditText>(R.id.etNewPassword)
+        val etConfirm = dialogView.findViewById<EditText>(R.id.etConfirmNewPassword)
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.title_change_password))
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.btn_update)) { dialog, _ ->
+                val current = etCurrent.text.toString()
+                val newPass = etNew.text.toString()
+                val confirm = etConfirm.text.toString()
+
+                if (newPass == confirm && newPass.isNotEmpty()) {
+                    updatePasswordInFirebase(current, newPass)
+                } else {
+                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton(getString(R.string.btn_cancel), null)
+            .show()
+    }
+
+    private fun updatePasswordInFirebase(current: String, newPass: String) {
+        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val email = sharedPref.getString("REG_EMAIL", "") ?: ""
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("users").whereEqualTo("email", email).get()
+            .addOnSuccessListener { docs ->
+                if (!docs.isEmpty) {
+                    val doc = docs.documents[0]
+                    val dbPass = doc.getString("password")
+                    if (dbPass == SecurityUtils.hashPassword(current)) {
+                        doc.reference.update("password", SecurityUtils.hashPassword(newPass))
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Password updated!", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        Toast.makeText(this, "Current password incorrect", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
     }
 
     private fun setupSpinners() {
@@ -116,19 +175,25 @@ class SettingsActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        // Start Date Spinner.
-        val spinnerStartDate = findViewById<Spinner>(R.id.spinnerStartDate)
-        val days = (1..31).map { it.toString() }.toTypedArray()
-        val dateAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, days)
-        dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerStartDate.adapter = dateAdapter
-        
-        val savedDay = prefs.getString("START_DAY", "1")
-        spinnerStartDate.setSelection(days.indexOf(savedDay))
+        // Language Spinner
+        val spinnerLanguage = findViewById<Spinner>(R.id.spinnerLanguage)
+        val languages = arrayOf("English", "Setswana", "isiZulu", "Sepedi", "Afrikaans")
+        val langCodes = arrayOf("en", "tn", "zu", "nso", "af")
+        val langAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
+        langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerLanguage.adapter = langAdapter
 
-        spinnerStartDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        val savedLang = prefs.getString("LANGUAGE", "en")
+        spinnerLanguage.setSelection(langCodes.indexOf(savedLang))
+
+        spinnerLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                prefs.edit().putString("START_DAY", days[position]).apply()
+                val selectedLang = langCodes[position]
+                if (selectedLang != prefs.getString("LANGUAGE", "en")) {
+                    prefs.edit().putString("LANGUAGE", selectedLang).apply()
+                    com.example.navigation.utils.LocaleHelper.setLocale(this@SettingsActivity, selectedLang)
+                    recreate()
+                }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }

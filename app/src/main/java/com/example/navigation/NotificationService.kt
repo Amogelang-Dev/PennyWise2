@@ -48,8 +48,18 @@ class NotificationService : NotificationListenerService() {
 
         Log.d(TAG, "Notification content: [Title: $title] [Text: $text]")
 
-        // We use regex to hunt for currency patterns (e.g., R 150.00) in the text.
-        val amount = extractAmount(text)
+        // Keywords that suggest a spending transaction
+        val spendingKeywords = listOf("purchased", "spent", "paid", "withdrawal", "debit", "payment", "bought")
+        val isSpending = spendingKeywords.any { text.lowercase().contains(it) } || 
+                        spendingKeywords.any { title.lowercase().contains(it) }
+
+        if (!isSpending) {
+            Log.d(TAG, "Notification does not seem to be a spending transaction. Skipping.")
+            return
+        }
+
+        // We use our dedicated parser to hunt for currency patterns.
+        val amount = NotificationParser.extractAmount(text)
         
         if (amount > 0) {
             Log.i(TAG, "Successfully extracted transaction amount: R$amount")
@@ -61,42 +71,7 @@ class NotificationService : NotificationListenerService() {
     }
 
     /**
-     * A clever regex-based helper to find monetary values in unstructured strings.
-     * It accounts for common South African formatting like "R 1,234.56" or "R123.45".
-     */
-    private fun extractAmount(text: String): Float {
-        // Look for 'R' followed by digits, spaces, commas, or dots
-        val pattern = Pattern.compile("R\\s?([\\d\\s,]+\\.\\d{2}|[\\d\\s.]+,\\d{2})")
-        val matcher = pattern.matcher(text)
-        
-        return if (matcher.find()) {
-            try {
-                // Clean the string: remove whitespace and normalize commas to dots
-                val cleaned = matcher.group(1)
-                    ?.replace("\\s".toRegex(), "")
-                    ?.replace(",", ".") ?: "0"
-                
-                // Handling cases with multiple separators (e.g., 1.000.00)
-                val finalAmount = if (cleaned.count { it == '.' } > 1) {
-                    val lastDotIndex = cleaned.lastIndexOf('.')
-                    cleaned.substring(0, lastDotIndex).replace(".", "") + cleaned.substring(lastDotIndex)
-                } else {
-                    cleaned
-                }
-                
-                finalAmount.toFloat()
-            } catch (e: Exception) {
-                Log.e(TAG, "Regex cleanup failed for amount extraction", e)
-                0f
-            }
-        } else {
-            0f
-        }
-    }
-
-    /**
      * Automatically inserts the detected transaction into our local SQLite database.
-     * This saves the user the effort of manual logging!
      */
     private fun recordAutomatedTransaction(amount: Float, bankName: String, pkg: String) {
         val db = DatabaseHelper(this)
@@ -120,7 +95,6 @@ class NotificationService : NotificationListenerService() {
 
     /**
      * Gamification logic: Award 5 XP for every automated transaction detected.
-     * We sync this both locally and to the cloud (Firestore).
      */
     private fun awardXP() {
         Log.d(TAG, "Awarding XP for automated transaction")
@@ -143,3 +117,4 @@ class NotificationService : NotificationListenerService() {
         }
     }
 }
+

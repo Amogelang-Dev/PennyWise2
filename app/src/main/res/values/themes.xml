@@ -1,14 +1,12 @@
 <!-- This file sets the overall look and feel of the app, like its primary colors and style -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- This section defines the main theme for the entire application -->
-    <style name="Theme.Navigation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Navigation" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- The main colors used for the app's branding -->
         <item name="colorPrimary">@color/primary_blue</item>
-        <item name="colorPrimaryVariant">@color/primary_blue_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary colors used for accents and other highlights -->
         <item name="colorSecondary">@color/secondary_green</item>
-        <item name="colorSecondaryVariant">@color/secondary_green</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Surface and Background colors -->
@@ -24,6 +22,17 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <!-- Bottom Navigation Customization -->
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/App.Custom.Indicator</item>
+    </style>
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary_blue</item>
     </style>
 
     <style name="CircleImage" parent="">

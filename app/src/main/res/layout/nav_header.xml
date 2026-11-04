@@ -29,6 +29,7 @@
         android:paddingTop="8dp"
         android:text="@string/placeholder_user_name"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/background_gray">
+        android:background="@color/surface_light">
 
         <!-- Custom Top Bar providing context and access to the navigation drawer. -->
         <LinearLayout
@@ -62,8 +62,8 @@
             android:background="@color/primary_blue"
             app:menu="@menu/bottom_menu"
             app:labelVisibilityMode="labeled"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white" />
+            app:itemTextColor="@color/nav_item_color"
+            app:itemIconTint="@color/nav_item_color" />
 
     </LinearLayout>
 
