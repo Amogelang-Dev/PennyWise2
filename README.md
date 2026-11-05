@@ -128,5 +128,5 @@ Official demonstration video: [Watch Here](https://youtu.be/Q26cPzqtEZ8?si=llGYX
 
 ---
 <p align="center">
-  Built with Kotlin, Android, and Firebase. © 2026 SyreTech.
+  Built with Kotlin, Android, and Firebase. © 2026 SyreTech Solutions.
 </p>
