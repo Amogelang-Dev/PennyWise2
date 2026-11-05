@@ -95,6 +95,34 @@ The application follows a modular architecture:
     * **Direct Bank Integration**: Secure API links to major financial institutions.
 
 ---
+## 🚀 Latest Updates & Improvements
+
+### 🛠 UI & UX Enhancements
+*   **Modern Dashboard Design**: Revamped the main interface with a high-contrast gradient balance card for better visibility.
+*   **Visual Budget Tracking**: Integrated dynamic progress bars that change color (Green/Blue to Red) based on spending thresholds.
+*   **Interactive Advice Hub**: Added a dedicated card for "Financial Tip of the Day" powered by the AdviceSlip API.
+*   **Quick ATM Finder**: Direct integration with mapping services to locate the nearest banking points with a single tap.
+*   **Custom Theming**: Improved Dark Mode support and added custom progress drawables for a more professional feel.
+
+### 🌍 Multi-Language Expansion
+Expanded accessibility to all major South African languages, including localized strings for:
+*   **Afrikaans**
+*   **Northern Sotho (Sepedi)**
+*   **Tswana**
+*   **Xhosa**
+*   **Zulu**
+
+### 🔐 Security & Reliability
+*   **Secure Credential Handling**: Implemented `SecurityUtils` for robust password validation and secure string processing.
+*   **Environment Safety**: Configured advanced `.gitignore` rules to protect sensitive files like `.jks` signing keys and `google-services.json`.
+*   **Base Activity Architecture**: Introduced `BaseActivity` to ensure consistent theme application and locale switching across all screens.
+
+### ⚙️ Technical Additions
+*   **Background Synchronization**: Integrated `WorkManager` with `SyncWorker.kt` for efficient, reliable data syncing.
+*   **Cloud Messaging**: Added `MyFirebaseMessagingService.kt` to handle real-time push notifications for budget alerts and tips.
+*   **Automated Parsing**: Enhanced `NotificationParser.kt` with support for a wider range of South African banking message formats.
+
+---
 ## 🎥 Demonstration Video
 Official demonstration video: [Watch Here](https://youtu.be/Q26cPzqtEZ8?si=llGYXxEvvPXlTBs_)
 
